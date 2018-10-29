@@ -1,0 +1,6 @@
+SELECT ?name (SUM(STRDT(?score, <http://www.w3.org/2001/XMLSchema#integer>)) as ?sum) (COUNT(distinct ?score) as ?count)
+WHERE {
+  ?x <http://schema.org/upvoteCount> ?score;
+     <http://schema.org/additionalName> ?name
+} GROUP BY ?name
+ORDER BY DESC(?sum) LIMIT 5

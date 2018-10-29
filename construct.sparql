@@ -1,0 +1,28 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <http://schema.org/>
+
+
+CONSTRUCT {
+  ?URI a schema:CreativeWork;
+    schema:additionalName ?name;
+    schema:headline ?q;
+    schema:text ?answer;
+    schema:dateCreated ?timestamp;
+    schema:upvoteCount ?score;
+    schema:ItemList ?list.
+}
+FROM <file:jokes.csv>
+WHERE{
+  BIND(URI(CONCAT('https://www.reddit.com/r/Jokes/comments/', ?id)) AS ?URI)
+  BIND(IF(?hilary = "1.0", STRDT("hilary",schema:itemListElement),
+        IF(?clinton = "1.0", STRDT("clinton",schema:itemListElement),
+        IF(?obama = "1.0", STRDT("obama",schema:itemListElement),
+        IF(?bush = "1.0", STRDT("bush",schema:itemListElement),
+        IF(?trump = "1.0", STRDT("trump",schema:itemListElement),
+        IF(?biden = "1.0", STRDT("biden",schema:itemListElement),
+        IF(?cheney = "1.0", STRDT("cheney",schema:itemListElement),
+        IF(?ajit = "1.0", STRDT("ajit",schema:itemListElement),
+        IF(?mccain = "1.0", STRDT("mccain",schema:itemListElement),
+        IF(?palin = "1.0", STRDT("palin",schema:itemListElement), STRDT("",schema:itemListElement))))))))))) as ?list)
+  # BIND(COALESCE(IF(?hilary = "1.0", STRDT("hilary",schema:itemListElement)),IF(?clinton = "1.0", STRDT("clinton",schema:itemListElement))) AS ?list)
+}

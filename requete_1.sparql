@@ -1,0 +1,17 @@
+SELECT * WHERE {
+  {
+    SELECT * WHERE {
+      ?link <http://schema.org/upvoteCount> ?score;
+            <http://schema.org/headline> ?question;
+            <http://schema.org/text> ?reponse
+      } ORDER BY ASC(?score) LIMIT 1
+  }
+  UNION
+  {
+    SELECT * WHERE {
+      ?link <http://schema.org/upvoteCount> ?score;
+            <http://schema.org/headline> ?question;
+            <http://schema.org/text> ?reponse
+      } ORDER BY DESC(?score) LIMIT 1
+  }
+}
