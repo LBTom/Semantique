@@ -1,0 +1,198 @@
+PREFIX schema: <http://schema.org/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX geof: <http://www.mindswap.org/2003/owl/geo/geoFeatures20040307.owl#>
+PREFIX rank: <http://dbpedia.org/ontology/rank#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX head: <http://dbpedia.org/ontology/head#>
+SELECT ?country ?HappinessRank ?count ?maxscore
+WHERE {
+    ?x schema:text ?blague;
+       schema:headline ?headline;
+       schema:upvoteCount ?maxscore.
+
+    ?y geof:country ?country;
+       rank:happinessRank ?HappinessRank.
+    {
+      SELECT DISTINCT ?country (MAX(?score) AS ?maxscore) (COUNT(?x) AS ?count)
+      WHERE {
+        ?x schema:headline ?headline;
+           schema:text ?blague;
+           schema:upvoteCount ?score.
+
+        ?y geof:country ?country.
+
+           FILTER(regex(?headline, ?country) || regex(?blague, ?country))
+        } GROUP BY ?country
+    }
+    FILTER(regex(?headline, ?country) || regex(?blague, ?country))
+} GROUP BY ?country ?HappinessRank ?count ?maxscore
+ORDER BY DESC(?count)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| country     | HappinessRank | count | maxscore | titre                                              | reponse
+================================================================================================================================================================================
+| "Russia"    | "49"          | 955   | "99"     | "If you're Russian when you go into the bathroom,  |
+|             |               |       |          |  and Finnish when you come out; what are you       | "European"
+|             |               |       |          |  while in the bathroom?"                           |
+|             |               |       |          |                                                    |
+| "India"     | "122"         | 567   | "985"    | "A big city doctor visits an Indian tribe full     | ", he asks "How do you guys relieve your sexual tension?"
+|             |               |       |          | of men"                                            | "Simple, just come down to the river tomorrow and we'll show you.
+|             |               |       |          |                                                    | " The next day the doctor shows up and sees a group of men near
+|             |               |       |          |                                                    | a donkey.  One man says "Since you're our guest you get to go
+|             |               |       |          |                                                    | first."  The doctor not wanting to go against custom starts to
+|             |               |       |          |                                                    | kiss, then proceeds to have sex with the donkey.  Then a man in
+|             |               |       |          |                                                    | the group asks "Are you almost done Doc?"  "We need the donkey
+|             |               |       |          |                                                    | to cross the river in order to get to the tribe of."
+|             |               |       |          |                                                    |
+| "Japan"     | "51"          | 502   | "99"     | "An American, an Englishman and a Japanese man... "| "... were all seeking work on a building site. The foreman looks at
+|             |               |       |          |                                                    | them each and says "Ok, you Americans are hard workers, you can mix
+|             |               |       |          |                                                    | the cement, you British are good craftsmen, you can lay the bricks
+|             |               |       |          |                                                    | and you Japanese are good with logistics, you can be in charge of
+|             |               |       |          |                                                    | supplies. "The American and the Englishman set to work, mixing away
+|             |               |       |          |                                                    | and laying the bricks until quite an impressive wall has been built,
+|             |               |       |          |                                                    | exactly to specification. But soon the bricks, sand and cement powder
+|             |               |       |          |                                                    | start to run out and the Japanese guy is nowhere to be seen. Finally
+|             |               |       |          |                                                    | the materials are all gone and they have to stop building. They go to
+|             |               |       |          |                                                    | see where he has gone. The foreman hasn't seen him, the workshop hasn't
+|             |               |       |          |                                                    | seen him, in fact no one else on the building site has seen him since he
+|             |               |       |          |                                                    | started working there. They start to get very worried and search the
+|             |               |       |          |                                                    | whole site for him, thinking the worst... as they approach a large pile
+|             |               |       |          |                                                    | of rubble suddenly the Japanese guy jumps up in to the air smiling and
+|             |               |       |          |                                                    |
+| "Australia" | "10"          | 314   | "991"    | "Well... That's Australians for you"               | "My 4-year-old was struggling to open his yoghurt today when he                                                                                                         suddenly mumbled "Fucking shitty lid! My wife immediately
+|             |               |       |          |                                                    | looked at me and angrily said "I wonder where he's got that
+|             |               |       |          |                                                    | from?? "I said, "The fridge, you silly cunt."
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------
+| country       | HappinessRank | count | maxscore |
+====================================================
+| "Russia"      | "49"          | 955   | "99"     |
+| "India"       | "122"         | 567   | "985"    |
+| "Japan"       | "51"          | 502   | "99"     |
+| "Australia"   | "10"          | 314   | "991"    |
+| "China"       | "79"          | 253   | "98"     |
+| "France"      | "31"          | 235   | "96"     |
+| "Canada"      | "7"           | 187   | "99"     |
+| "Mexico"      | "25"          | 186   | "99"     |
+| "Iraq"        | "117"         | 185   | "979"    |
+| "Israel"      | "11"          | 181   | "984"    |
+| "Germany"     | "16"          | 176   | "953"    |
+| "Ireland"     | "15"          | 175   | "96"     |
+| "Egypt"       | "104"         | 171   | "95"     |
+| "Jamaica"     | "76"          | 147   | "99"     |
+| "Vietnam"     | "94"          | 141   | "962"    |
+| "Brazil"      | "22"          | 137   | "97"     |
+| "Ethiopia"    | "119"         | 128   | "91"     |
+| "Pakistan"    | "80"          | 117   | "931"    |
+| "Iran"        | "108"         | 105   | "9"      |
+| "Italy"       | "48"          | 104   | "927"    |
+| "Syria"       | "152"         | 95    | "93"     |
+| "Afghanistan" | "141"         | 92    | "99"     |
+| "Turkey"      | "69"          | 89    | "93"     |
+| "Switzerland" | "4"           | 82    | "97"     |
+| "Greece"      | "87"          | 74    | "954"    |
+| "Spain"       | "34"          | 73    | "99"     |
+| "Poland"      | "46"          | 54    | "92"     |
+| "Niger"       | "135"         | 51    | "99"     |
+| "Thailand"    | "32"          | 50    | "996"    |
+| "Nigeria"     | "95"          | 50    | "99"     |
+| "Bulgaria"    | "105"         | 48    | "94"     |
+| "Sweden"      | "9"           | 43    | "997"    |
+| "Georgia"     | "125"         | 42    | "9"      |
+| "Kenya"       | "112"         | 36    | "9"      |
+| "Austria"     | "13"          | 36    | "9"      |
+| "Ukraine"     | "132"         | 36    | "9"      |
+| "Romania"     | "57"          | 35    | "87"     |
+| "Mongolia"    | "100"         | 32    | "98"     |
+| "Chile"       | "20"          | 32    | "9"      |
+| "Colombia"    | "36"          | 31    | "895"    |
+| "Malaysia"    | "42"          | 31    | "87"     |
+| "Hungary"     | "75"          | 31    | "96"     |
+| "Finland"     | "5"           | 30    | "90"     |
+| "Latvia"      | "54"          | 28    | "931"    |
+| "Zimbabwe"    | "138"         | 26    | "9"      |
+| "Iceland"     | "3"           | 26    | "87"     |
+| "Singapore"   | "26"          | 25    | "87"     |
+| "Jordan"      | "74"          | 24    | "9"      |
+| "Norway"      | "1"           | 23    | "9"      |
+| "Armenia"     | "121"         | 23    | "88"     |
+| "Qatar"       | "35"          | 23    | "87"     |
+| "Peru"        | "63"          | 22    | "87"     |
+| "Chad"        | "137"         | 21    | "87"     |
+| "Venezuela"   | "82"          | 21    | "9"      |
+| "Lithuania"   | "52"          | 20    | "87"     |
+| "Estonia"     | "66"          | 20    | "87"     |
+| "Albania"     | "109"         | 19    | "9"      |
+| "Yemen"       | "146"         | 19    | "9"      |
+| "Ecuador"     | "44"          | 19    | "87"     |
+| "Haiti"       | "145"         | 18    | "87"     |
+| "Bolivia"     | "58"          | 18    | "895"    |
+| "Nepal"       | "99"          | 18    | "87"     |
+| "Cambodia"    | "129"         | 17    | "87"     |
+| "Uganda"      | "133"         | 17    | "99"     |
+| "Guatemala"   | "29"          | 17    | "9"      |
+| "Panama"      | "30"          | 17    | "87"     |
+| "Kuwait"      | "39"          | 17    | "87"     |
+| "Libya"       | "68"          | 17    | "87"     |
+| "Croatia"     | "77"          | 17    | "87"     |
+| "Ghana"       | "131"         | 16    | "87"     |
+| "Guinea"      | "149"         | 16    | "87"     |
+| "Sudan"       | "130"         | 15    | "87"     |
+| "Belarus"     | "67"          | 15    | "87"     |
+| "Macedonia"   | "92"          | 15    | "87"     |
+| "Uruguay"     | "28"          | 14    | "87"     |
+| "Zambia"      | "116"         | 13    | "87"     |
+| "Togo"        | "150"         | 13    | "87"     |
+| "Moldova"     | "56"          | 13    | "87"     |
+| "Azerbaijan"  | "85"          | 13    | "87"     |
+| "Belgium"     | "17"          | 12    | "8"      |
+| "Algeria"     | "53"          | 12    | "87"     |
+| "Serbia"      | "73"          | 12    | "9"      |
+| "Indonesia"   | "81"          | 12    | "87"     |
+| "Bangladesh"  | "110"         | 11    | "87"     |
+| "Namibia"     | "111"         | 11    | "87"     |
+| "Mali"        | "127"         | 11    | "87"     |
+| "Slovenia"    | "62"          | 11    | "87"     |
+| "Somalia"     | "93"          | 11    | "9376"   |
+| "Senegal"     | "115"         | 10    | "87"     |
+| "Benin"       | "143"         | 10    | "87"     |
+| "Liberia"     | "148"         | 10    | "87"     |
+| "Rwanda"      | "151"         | 10    | "87"     |
+| "Tanzania"    | "153"         | 10    | "87"     |
+| "Slovakia"    | "40"          | 10    | "87"     |
+| "Uzbekistan"  | "47"          | 10    | "87"     |
+| "Belize"      | "50"          | 10    | "87"     |
+| "Kazakhstan"  | "60"          | 10    | "87"     |
+| "Tunisia"     | "102"         | 9     | "87"     |
+| "Gabon"       | "118"         | 9     | "87"     |
+| "Angola"      | "140"         | 9     | "87"     |
+| "Luxembourg"  | "18"          | 9     | "9"      |
+| "Denmark"     | "2"           | 9     | "9"      |
+| "Bahrain"     | "41"          | 9     | "87"     |
+| "Nicaragua"   | "43"          | 9     | "87"     |
+| "Bhutan"      | "97"          | 9     | "87"     |
+| "Cameroon"    | "107"         | 8     | "87"     |
+| "Mauritania"  | "123"         | 8     | "87"     |
+| "Malawi"      | "136"         | 8     | "87"     |
+| "Burundi"     | "154"         | 8     | "87"     |
+| "Netherlands" | "6"           | 8     | "9"      |
+| "Paraguay"    | "70"          | 8     | "87"     |
+| "Portugal"    | "89"          | 8     | "92"     |
+| "Madagascar"  | "144"         | 7     | "90"     |
+| "Argentina"   | "24"          | 7     | "9"      |
+| "Lebanon"     | "88"          | 6     | "46"     |
+| "Philippines" | "72"          | 5     | "6"      |
+| "Tajikistan"  | "96"          | 5     | "73"     |
+| "Botswana"    | "142"         | 4     | "67"     |
+| "Morocco"     | "84"          | 4     | "22"     |
+| "Malta"       | "27"          | 2     | "8"      |
+| "Honduras"    | "91"          | 2     | "9"      |
+| "Mozambique"  | "113"         | 1     | "10"     |
+| "Cyprus"      | "65"          | 1     | "15"     |
+| "NewZealand"  | "8"           | 1     | "14"     |
+| "Montenegro"  | "83"          | 1     | "32"     |
+| "Kyrgyzstan"  | "98"          | 1     | "344"    |
+----------------------------------------------------

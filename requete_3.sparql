@@ -1,0 +1,35 @@
+PREFIX schema: <http://schema.org/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?headline ?blague ?joketimestamp ?nomvolcan ?volcanotimestamp ?delta
+WHERE{
+  ?x schema:headline ?headline;
+     schema:text ?blague;
+     schema:dateCreated ?time;
+     schema:text ?answer.
+
+  ?y dbo:year ?annee;
+     dbo:month ?mois;
+     dbo:day ?jour;
+     dbo:volcano ?nomvolcan.
+
+  FILTER(regex(?headline, "volcano"))
+  BIND(xsd:integer (strbefore(?time, ".")) As ?joketimestamp)
+  BIND(xsd:integer (?annee) As ?Annee)
+  BIND(xsd:integer (?mois) As ?Mois)
+  BIND(xsd:integer (?jour) As ?Jour)
+  BIND( (?Annee -1970) * 31557600 + (?Mois - 1) * 2629743 + (?Jour - 1) * 86400 AS ?volcanotimestamp)
+  BIND( ?joketimestamp - ?volcanotimestamp AS ?delta)
+  FILTER(?joketimestamp > ?volcanotimestamp - 86400 && ?joketimestamp < ?volcanotimestamp + 604800)
+}
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| headline                                                  | blague                                                | joketimestamp | nomvolcan | volcanotimestamp | delta  |
+=============================================================================================================================================================================
+| "What do you get when you throw a chicken in a volcano?"  | "Baklava"                                             | 1513864956    | "Merapi"  | 1513603173       | 261783 |
+| "Why are volcanoes so jolly?"                             | "Whenever they hear a joke, they erupt with laughter" | 1489931198    | "Etna"    | 1489676286       | 254912 |
+| "The Calbuco volcano is very hot right now... "           | "But everything around it is Chile. "                 | 1429807197    | "Calbuco" | 1429795629       | 11568  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
