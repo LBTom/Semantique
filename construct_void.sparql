@@ -1,0 +1,44 @@
+PREFIX dcterms: <http://purl.org/dc/terms/> .
+PREFIX void: <http://rdf.org/ns/void#> .
+PREFIX foaf: <http://xmlns.com/foaf/0.1/> .
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf: <http://www.w3.org/2000/01/rdf-schema#>
+
+:RedditJokes        a                         void:Dataset;
+                    dcterms:title             "Reddit Jokes";
+                    dcterms:description       "Blagues issues de la section jokes du site Reddit";
+                    dcterms:creator           :CreatorPen;
+                    dcterms:publisher         :Goulley_Matthias;
+                    dcterms:publisher         :Vieira_Apollon;
+                    dcterms:contributor       :Univ_Nantes;
+                    dcterms:source            :source;
+                    dcterms:created           "2018-02-01"^^xsd:date ;
+                    dcterms:issued            "2018-10-14"^^xsd:date ;
+                    dcterms:modified          "2018-11-28"^^xsd:date ;
+                    dcterms:license           <http://www.opendatacommons.org/licenses/pddl/> ;
+                    void:feature              <http://www.w3.org/ns/formats/Turtle>;
+                    void:exampleResource      <https://www.reddit.com/r/Jokes/comments/2nwsgg>;
+                    void:exampleResource      <https://www.reddit.com/r/Jokes/comments/2nwc7k>;
+                    void:entities	            133329;
+                    void:vocabulary           <http://schema.org/>.
+
+
+:source             rdf:resource              foaf:Person;
+                    rdf:label                 "Lien de téléchargement du dataset";
+                    foaf:homepage             <https://www.kaggle.com/cuddlefish/reddit-rjokes#jokes_score_name_clean.csv>.
+
+:Univ_Nantes        a                         foaf:Organization;
+                    rdf:label                 "Université de Nantes";
+                    foaf:homepage             <http://www.univ-nantes.fr>.
+
+:Goulley_Matthias   a                         foaf:Person;
+                    rdf:label                 "Goulley Matthias";
+                    foaf:mbox                 <matthias.goulley@etu.univ-nantes.fr>.
+
+:Vieira_Apollon     a                         foaf:Person;
+                    rdf:label                 "Vieira Apollon";
+                    foaf:mbox                 <apollon.vieira@etu.univ-nantes.fr>.
+
+:CreatorPen         a                         foaf:Person;
+                    rdf:label                 "PenPen";
+                    foaf:homepage             <https://www.kaggle.com/cuddlefish>.
