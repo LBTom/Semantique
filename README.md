@@ -1,5 +1,4 @@
-# Semantique
-Projet de Web Semantique 2018, Reddit Jokes.
+# Projet de Web Semantique: Reddit Jokes
 ## Liens Utiles
 * [Slides](https://docs.google.com/presentation/d/1PNsmJEtifqNKcZOGuWcshCTQc_gmIBTLq8I2dl_SNm0/edit?usp=sharing)
 * [Données en RDF](http://filex.univ-nantes.fr/get?k=bObGKiupInIka8RbU9h)
